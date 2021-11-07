@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+  </head>
+  <body style="width: 100%;">
+  </body>
+  <script>
+    let current_letter = 'A'
+    let letter_options = 'ABCDEFG'
+        function random_letter(){
+              new_letter = letter_options.charAt(Math.floor(Math.random() * letter_options.length));
+              if (new_letter === current_letter) {
+                return random_letter()
+              }
+              return new_letter
+            }
+    function draw() {
+          const speed = speed_slider.value();
+          background('white');
+          textSize(15);
+          text(`speed: ${speed}/s`, speed_slider.x * 2 + speed_slider.width, 35);
+          textSize(height / 2);
+          textAlign(CENTER, CENTER);
+          text(current_letter, width / 2, height / 2);
+          const frames_per_letter = round(frameRate()/speed)
+          if (frameCount % frames_per_letter == 0) {
+            console.log('change_letter')
+                current_letter = random_letter()
+          }
+        }
+
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+
+        function setup() {
+              frameRate(20)
+              canvas=createCanvas(w, h);
+              noStroke();
+              speed_slider = createSlider(0, 10, 1, 0.5);
+              speed_slider.position(20, 20);
+            }
+
+        window.onresize = function() {
+              // assigns new values for width and height variables
+              w = window.innerWidth;
+              h = window.innerHeight;
+              canvas.size(w,h);
+            }
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+</html>
